@@ -7,18 +7,28 @@ public class BankApp {
     public static final String RED = "\033[0;31m";
     public static final String BLUE_BOLD_BRIGHT = "\033[1;94m";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
 
         Scanner sc = new Scanner(System.in);
+        int maxAttempts = 3;
+        int attempts = 0;
+        BankAccount userAccount = new BankAccount("1991");
+        while(attempts < maxAttempts){
         System.out.print(BLUE_BOLD_BRIGHT + "Vusal Quliyev. 4 Reqemli sifreni daxil edin:" +
                 " " + '*' + '*' + '*' + '*' + " " + RESET);
         String enteredPassword = sc.nextLine();
-
-        BankAccount userAccount = new BankAccount("1991");
         if (userAccount.autoEnter(enteredPassword)) {
             System.out.println(BLUE_BOLD_BRIGHT + "Sifre Dogrudur: \nMr.Quliyev Kapital Banka Xos gelmisiniz:" +
                     "" + RESET);
-
+                 break;
+        }else{
+            attempts++;
+            System.out.println("daxil etdiyiniz Sifre Yalnisdir !! Qalan Shansiniz: " + (maxAttempts - attempts));
+                if (attempts == maxAttempts) {
+                   throw new Exception("3 Defe Yalnis Shifre daxil edildi \n Elaqe-196 Qaynar xett");
+                }
+            }
+        }
             while (true) {
                 System.out.println(BLUE_BOLD_BRIGHT + "1-) Medaxil edin " + RESET);
                 System.out.println(BLUE_BOLD_BRIGHT + "2-) Pul Cekin " + RESET);
@@ -48,9 +58,4 @@ public class BankApp {
                         System.out.println(RED + "Dogru Secim Etmediniz !!" + RESET);
                 }
             }
-        } else {
-            System.out.println(RED + "Daxil etdiyiniz sifre yalnisdir !! \n Elaqe-196 Qaynar Xett" + RESET);
-        }
-    }
 
-}
